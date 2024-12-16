@@ -35,20 +35,20 @@
                 </div>
             </div>
         </div>
-
         <!-- 連結清單頁面 -->
         <div v-else>
-            <!-- 連結列表 -->
             <div class="list-group">
-                <div v-for="(link, index) in links" 
+                <div v-for="(link, index) in sortedLinks" 
                      :key="index" 
                      class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between align-items-center">
                         <div>
+                            <span class="badge bg-primary me-2">{{ link.code }}</span>
+                            <span class="badge bg-secondary me-2">{{ link.name }}</span>
                             <a :href="link.url" 
                                target="_blank" 
                                class="small text-muted">
-                                {{ link.title }}
+                                連結
                             </a>
                         </div>
                     </div>
@@ -56,9 +56,15 @@
             </div>
         </div>
     </div>
-
     <script>
         const { createApp } = Vue
+
+        const linkData = [];
+		linkData.push({code: 'START-204', name: '葵ななせ', url: 'https://thisav.com/start-204-uncensored-leak'});
+		linkData.push({code: 'NIMA-026', name: '美咲佳奈', url: 'https://thisav.com/dm43/nima-026-uncensored-leak'});
+		linkData.push({code: 'ORECO-169', name: 'HIMARI', url: 'https://thisav.com/dm13/en/oreco-169'});
+		linkData.push({code: 'SIRO-2833', name: '小宮ののか', url: 'https://thisav.com/dm13/siro-2833'});
+		// linkData.push({code: '', name: '', url: ''});
 
         createApp({
             data() {
@@ -67,9 +73,14 @@
                     isAuthenticated: false,
                     inputPassword: '',
                     showError: false,
-                    links: [
-                        { title: '勞工專區', url: 'https://portal.mercuries.com.tw/portal/login.aspx' },
-                    ]
+                    links: linkData
+                }
+            },
+            computed: {
+                sortedLinks() {
+                    return [...this.links].sort((a, b) => 
+                        a.name.localeCompare(b.name)
+                    );
                 }
             },
             methods: {
